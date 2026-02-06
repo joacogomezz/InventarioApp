@@ -12,9 +12,7 @@ plugins {
 android {
     namespace = "com.joaqo.inventarioapp"
 
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.joaqo.inventarioapp"
@@ -40,37 +38,37 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
-    }
-
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-
-    secrets {
-        propertiesFileName = "local.properties"
-        defaultPropertiesFileName = "local.defaults.properties"
-        ignoreList.add("sdk.dir")
     }
 
     flavorDimensions.add("environment")
     productFlavors {
         create("dev") {
             dimension = "environment"
-            buildConfigField("String", "BASE_URL", "\"http://localhost:8080/\"")
+            buildConfigField("String", "BASE_URL", "\"https://joaquinproducts.chuy7x.space/\"")
             resValue("string", "app_name", "INVENTARIOAPP (DEV)")
         }
 
         create("prod") {
             dimension = "environment"
-            buildConfigField("String", "BASE_URL", "\"http://localhost:8080/\"")
+            buildConfigField("String", "BASE_URL", "\"https://joaquinproducts.chuy7x.space/\"")
             resValue("string", "app_name", "INVENTARIOAPP Pro")
         }
     }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
+}
+
+secrets {
+    propertiesFileName = "local.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
+    ignoreList.add("sdk.dir")
 }
 
 dependencies {
@@ -83,14 +81,14 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.text.google.fonts)
-    implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.viewmodel.compose)   //viewModel()
     implementation(libs.com.squareup.retrofit2.retrofit)        // Retrofit
     implementation(libs.com.squareup.retrofit2.converter.json)  // JSON
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0") // OkHttp logging
     implementation(libs.io.coil.kt.coil.compose)
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.navigation.compose)                // IO
+    implementation(libs.androidx.navigation.compose)                // Navigation
     implementation(libs.androidx.compose.material.icons.extended)   // Icons
+    implementation(libs.kotlinx.serialization.json)                 // Serialization
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -99,3 +97,5 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
+
+
